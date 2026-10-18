@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+dist/
+models/
+logs/
+out/
+predict/ngram.json.gz
+predict/words_alpha.txt
+.env

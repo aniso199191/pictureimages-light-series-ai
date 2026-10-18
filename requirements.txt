@@ -1,0 +1,9 @@
+# Core training and inference (CPU works; a GPU is only needed for 7B+)
+torch>=2.2
+numpy>=1.24
+
+# Optional: QLoRA fine-tuning of 7–9B models on a borrowed GPU (train/qlora.py)
+# transformers>=4.44
+# peft>=0.12
+# bitsandbytes>=0.43
+# datasets>=2.20

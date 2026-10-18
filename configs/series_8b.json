@@ -1,0 +1,16 @@
+{
+  "name": "PictureImages Light Series 8B (design target)",
+  "vocab_size": 128000,
+  "n_layer": 28,
+  "n_head": 32,
+  "n_embd": 4096,
+  "block_size": 4096,
+  "dropout": 0.0,
+  "tie_embeddings": true,
+  "rope_scale": 1.0,
+  "parameters_verified": 9106000000,
+  "parameter_count_method": "instantiated on torch meta device (no memory allocated) with train/model.py, vocab_size=128000; reported by sum(p.numel()).",
+  "note": "This is the series architecture config. It is NOT trained here: this host has no GPU, 3.8 GB per-process memory and under 10 GB free disk. Training this config requires a multi-GPU machine and about 100x more text than the debug corpus.",
+  "long_context": "Set rope_scale=8..16 at inference for 32k-64k effective context. The 1M-1.5M target additionally needs grouped-query attention and quantized KV cache; see docs/SPEC.md.",
+  "parameters_note": "architecture only, 8.04B params verified on meta device"
+}
