@@ -93,6 +93,22 @@ systemctl --user start larme-model@qwen2.5-3b     # 手动拉起单个模型
 
 不需要单独写 systemd 单元——模板 `larme-model@.service` 用模型名当参数。
 
+## 推理等级（v 标签）
+
+模型名后面加 `-ultra` / `-max` / `-high` 即为同一份权重的三档推理预算：
+
+| 等级 | 标签 | max_tokens 下限 | 温度 |
+|---|---|---|---|
+| **ultra** | Ultra 最厉害 | 2048 | 0.7 |
+| **max** | Max 高智商 | 1024 | 0.6 |
+| **high** | High 中智商 | 512 | 0.5 |
+
+```bash
+curl .../relay/v1/chat/completions -d '{"model":"qwen2.5-3b-ultra", ...}'
+```
+
+不带后缀＝默认档。等级只影响生成预算与采样温度，不改变权重；`/v1/models` 的 `tiers` 字段会列出全部三档。
+
 ## 对话模板差异（踩过的坑）
 
 | 模型 | 处理 |
