@@ -26,6 +26,9 @@ https://platform.we-strikes.top/relay/            # 说明页
 | `gemma-3-1b` | Gemma-3-1B-it | 768 MB | 4096 | gemma |
 | `gemma-3-4b` | Gemma-3-4B-it | 2.4 GB | 2048 | gemma |
 | `gpt-oss-4b` | gpt-oss-4B（社区重制，非 OpenAI 官方） | 3.1 GB | 2048 | 模型自带 |
+| `qwen3-0.6b` | Qwen3-0.6B | 462 MB | 4096 | 跳过思考 |
+| `qwen3-4b` | Qwen3-4B | 2.4 GB | 2048 | 跳过思考 |
+| `glm-edge-4b` | GLM-Edge-4B-Chat | 2.5 GB | 2048 | chatml |
 
 别名：
 `qwen` / `qwen2.5` / `tongyi` → `qwen2.5-3b`；`default` / `larme` → `qwen2.5-1.5b`；
@@ -89,6 +92,17 @@ systemctl --user start larme-model@qwen2.5-3b     # 手动拉起单个模型
 3. `systemctl --user daemon-reload && systemctl --user restart larme-relay`
 
 不需要单独写 systemd 单元——模板 `larme-model@.service` 用模型名当参数。
+
+## 对话模板差异（踩过的坑）
+
+| 模型 | 处理 |
+|---|---|
+| 千问 2.5 / DeepSeek-Distill / GLM-Edge | `chatml` |
+| Gemma-3 | `chat_format="gemma"`，用 chatml 会答非所问 |
+| gpt-oss | `chat_format=None`，用 GGUF 自带模板 |
+| Qwen3 | 会先输出大段 `<think>`，CPU 上把 token 预算吃光；服务端手拼 `<think>\n\n</think>` 强制跳过思考 |
+
+输出侧还有一道 `去思考()`，任何模型漏出的 `<think>…</think>` 都会被剥掉，前端看不到。
 
 ## 已排除
 
